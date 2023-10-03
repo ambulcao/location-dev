@@ -6,9 +6,6 @@ import  Home  from './components/home';
 //dotenv.config();
 
 export default function App() {
-
- 
-
   return (
     <ChakraProvider>
       <Home/>

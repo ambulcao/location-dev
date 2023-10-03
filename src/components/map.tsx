@@ -1,20 +1,26 @@
-//import React, { useState, useMemo, useCallback, useRef } from 'react';
-/*import {
+import React, { useState, useMemo, useCallback, useRef } from 'react';
+import {
   GoogleMap,
   Marker,
   DirectionsRenderer,
   Circle,
   MarkerClusterer
-} from '@react-google-maps/api'*/
+} from '@react-google-maps/api'
+//import '../App.css'
 //import  Places  from './placeDetail'
 //import Distance from './distance'
 
 type LatLngLiteral = google.maps.LatLngLiteral
-//type DirectionsResult = google.maps.DirectionsResult
-//type MapOptions = google.maps.MapOptions
+type DirectionsResult = google.maps.DirectionsResult
+type MapOptions = google.maps.MapOptions
 
 export function LocationMap() {
-  return <div>Map</div>
+  return <div className='container'>
+    <div className='controls'>
+      <h1>Commute?</h1>
+    </div>
+    <div className='map'></div>
+  </div>
 }
 
 const defaultOptions = {
