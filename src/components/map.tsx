@@ -14,12 +14,24 @@ type LatLngLiteral = google.maps.LatLngLiteral
 type DirectionsResult = google.maps.DirectionsResult
 type MapOptions = google.maps.MapOptions
 
+
 export function LocationMap() {
+
+  const center = useMemo(() => ({ lat: 43, lng: -80 }), [])
+  
   return <div className='container'>
     <div className='controls'>
       <h1>Commute?</h1>
     </div>
-    <div className='map'></div>
+    <div className='map'>
+      <GoogleMap 
+        zoom={10} 
+        center={ center }
+        mapContainerClassName='map-container'
+      >
+        
+      </GoogleMap>
+    </div>
   </div>
 }
 
