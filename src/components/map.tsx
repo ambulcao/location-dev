@@ -7,7 +7,8 @@ import {
   MarkerClusterer
 } from '@react-google-maps/api'
 //import '../App.css'
-//import  Places  from './placeDetail'
+import { PlaceDetail } from './placeDetail';
+
 //import Distance from './distance'
 
 type LatLngLiteral = google.maps.LatLngLiteral
@@ -16,9 +17,11 @@ type MapOptions = google.maps.MapOptions
 
 
 export function LocationMap() {
+  const [office, setOffice] = useState<LatLngLiteral>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
   const options = useMemo<MapOptions>(() => ({
+    mapId: "13a84d305d69091b",
     disableDefaultUI: true,
     clickableIcons: false,
   }), [] )
@@ -30,6 +33,10 @@ export function LocationMap() {
   return <div className='container'>
     <div className='controls'>
       <h1>Commute?</h1>
+      <PlaceDetail setOffice={(position) => {
+        setOffice(position)
+        mapRef.current?.panTo(position)
+      }} />
     </div>
     <div className='map'>
       <GoogleMap 
