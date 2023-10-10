@@ -2,9 +2,31 @@ import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete'
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxPopover,
+  ComboboxList,
+  ComboboxOption,
+} from '@reach/combobox'
+import '@reach/combobox/styles.css'
 
-  export function PlaceDetail() {
-    return (
-      <div>Place Name</div>
-    );
+type PlacesProps = {
+  setOffice: (position: google.maps.LatLngLiteral) => void;
+}
+
+  export default function PlaceDetail({ setOffice }: PlacesProps) {
+    
+    const { 
+      ready, 
+      value, 
+      setValue, 
+      suggestions: { status, data }, 
+      clearSuggestions
+    } = usePlacesAutocomplete()
+
+    return 
+      <Combobox onSelect={() => {}}>
+        <ComboboxInput value={value} onChange={e => setValue(e.target)} />
+      </Combobox>
   }

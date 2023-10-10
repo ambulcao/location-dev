@@ -7,7 +7,7 @@ import {
   MarkerClusterer
 } from '@react-google-maps/api'
 //import '../App.css'
-import { PlaceDetail } from './placeDetail';
+import  PlaceDetail  from './placeDetail';
 
 //import Distance from './distance'
 
@@ -16,7 +16,7 @@ type DirectionsResult = google.maps.DirectionsResult
 type MapOptions = google.maps.MapOptions
 
 
-export function LocationMap() {
+export default function LocationMap() {
   const [office, setOffice] = useState<LatLngLiteral>();
   const mapRef = useRef<GoogleMap>();
   const center = useMemo<LatLngLiteral>(() => ({ lat: 43, lng: -80 }), [])
