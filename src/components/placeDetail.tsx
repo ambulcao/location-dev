@@ -1,3 +1,5 @@
+//const status: Status
+
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
@@ -15,18 +17,23 @@ type PlacesProps = {
   setOffice: (position: google.maps.LatLngLiteral) => void;
 }
 
-  export default function PlaceDetail({ setOffice }: PlacesProps) {
-    
-    const { 
-      ready, 
-      value, 
-      setValue, 
-      suggestions: { status, data }, 
-      clearSuggestions
-    } = usePlacesAutocomplete()
+export default function PlaceDetail({ setOffice }: PlacesProps) {
+  const { 
+    ready, 
+    value, 
+    setValue, 
+    suggestions: { data },  // Removed "status" here
+    clearSuggestions
+  } = usePlacesAutocomplete()
 
-    return 
-      <Combobox onSelect={() => {}}>
-        <ComboboxInput value={value} onChange={e => setValue(e.target)} />
-      </Combobox>
-  }
+  return (
+    <Combobox onSelect={() => {}}>
+      <ComboboxInput 
+        value={value} 
+        onChange={e => setValue(e.target.value)} 
+        className="combobox-input"    
+        placeholder='Search office address'
+      />
+    </Combobox>
+  )
+}
