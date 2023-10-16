@@ -47,6 +47,8 @@ export default function LocationMap() {
         onLoad={onLoad}
       >
         
+        { office && <Marker position={office} /> }
+
       </GoogleMap>
     </div>
   </div>
