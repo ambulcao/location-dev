@@ -29,7 +29,8 @@ export default function LocationMap() {
     mapRef.current = map;
   }, []);*/
   const onLoad = useCallback((map) => (mapRef.current = map), [])
-  
+  const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
+        
   return <div className='container'>
     <div className='controls'>
       <h1>Commute?</h1>
@@ -39,6 +40,7 @@ export default function LocationMap() {
       }} />
     </div>
     <div className='map'>
+      
       <GoogleMap 
         zoom={10} 
         center={ center }
@@ -47,7 +49,30 @@ export default function LocationMap() {
         onLoad={onLoad}
       >
         
-        { office && <Marker position={office} /> }
+        { office && ( 
+          <>
+            <Marker 
+              position={office} /*icon={image}*/ 
+            />
+            <Circle
+              center={office}
+              radius={1500}
+              options={closeOptions}
+            />
+
+            <Circle
+              center={office}
+              radius={2000}
+              options={middleOptions}
+            />
+
+            <Circle
+              center={office}
+              radius={2500}
+              options={farOptions}
+            />
+          </>
+        )}
 
       </GoogleMap>
     </div>
