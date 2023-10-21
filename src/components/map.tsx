@@ -29,6 +29,7 @@ export default function LocationMap() {
     mapRef.current = map;
   }, []);*/
   const onLoad = useCallback((map) => (mapRef.current = map), [])
+  const houses = useMemo(() => generateHouses(center), [center]) 
   const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
         
   return <div className='container'>
@@ -54,6 +55,11 @@ export default function LocationMap() {
             <Marker 
               position={office} /*icon={image}*/ 
             />
+            
+            {houses.map((house) => (
+                <Marker key={house.lat} position={house} />
+            ))}
+
             <Circle
               center={office}
               radius={1500}
