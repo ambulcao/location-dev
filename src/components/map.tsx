@@ -56,9 +56,15 @@ export default function LocationMap() {
               position={office} /*icon={image}*/ 
             />
             
-            {houses.map((house) => (
-                <Marker key={house.lat} position={house} />
+            <MarkerClusterer>
+              {clusterer => houses.map((house) => (
+                <Marker 
+                  key={house.lat} 
+                  position={house} 
+                  clusterer={clusterer}
+                />
             ))}
+            </MarkerClusterer>
 
             <Circle
               center={office}
