@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import {
   GoogleMap,
   Marker,
@@ -8,7 +8,7 @@ import {
 } from '@react-google-maps/api'
 //import '../App.css'
 import  PlaceDetail  from './placeDetail';
-import { position } from '@chakra-ui/react';
+//import { position } from '@chakra-ui/react';
 
 //import Distance from './distance'
 
@@ -49,7 +49,7 @@ export default function LocationMap() {
       }
     )
   }
-  const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
+  //const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
         
   return <div className='container'>
     <div className='controls'>

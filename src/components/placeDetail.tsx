@@ -19,7 +19,7 @@ type PlacesProps = {
 
 export default function PlaceDetail({ setOffice }: PlacesProps) {
   const { 
-    ready, 
+    //ready, 
     value, 
     setValue, 
     suggestions: { status, data },  // Removed "status" here
