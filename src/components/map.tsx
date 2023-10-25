@@ -8,6 +8,7 @@ import {
 } from '@react-google-maps/api'
 //import '../App.css'
 import  PlaceDetail  from './placeDetail';
+import  Distance  from './distance';
 //import { position } from '@chakra-ui/react';
 
 //import Distance from './distance'
@@ -59,6 +60,11 @@ export default function LocationMap() {
         mapRef.current?.panTo(position)
       }} />
     </div>
+
+    {/*!office && <p>Enter the address of your office.</p>*/}
+
+    {directions && <Distance leg={directions.routes[0].legs[0]}/>}
+
     <div className='map'>
       
       <GoogleMap 
