@@ -19,6 +19,7 @@ type MapOptions = google.maps.MapOptions
 
 
 export default function LocationMap() {
+
   const [office, setOffice] = useState<LatLngLiteral>()
   const [directions, setDirections] = useState<DirectionsResult>()
   const mapRef = useRef<GoogleMap>()
