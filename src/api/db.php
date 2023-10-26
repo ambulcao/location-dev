@@ -1,9 +1,9 @@
 <?php
 
-$DB = array(
+/*$DB = array(
   "host" => "localhost",
   "user" => "root",
-  "password" => "root",
+  "password" => "",
   "database" => "devpriximbattfr",
   //"user" => "appcaixilharia",
   //"password" => "xchjO@36DG?e7aja",
@@ -13,8 +13,24 @@ $DB = array(
 
 
 try {
-  $database = new PDO("mysql:host=localhost;dbname=seu_banco_de_dados", "seu_usuario", "sua_senha");
+  $database = new PDO("mysql:host=localhost;dbname=devpriximbattfr", "root", " ");
   $database->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $e) {
+  echo "Erro na conexão com o banco de dados: " . $e->getMessage();
+}*/
+
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$dbname = "devpriximbattfr";
+$port = "3306";
+
+$conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
+try {
+  $conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  //echo "Conectado com sucesso";
 } catch(PDOException $e) {
   echo "Erro na conexão com o banco de dados: " . $e->getMessage();
 }
