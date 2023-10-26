@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import {
   GoogleMap,
   Marker,
@@ -9,7 +9,6 @@ import {
 //import '../App.css'
 import  PlaceDetail  from './placeDetail';
 import  Distance  from './distance';
-//import { position } from '@chakra-ui/react';
 
 //import Distance from './distance'
 
@@ -20,28 +19,40 @@ type MapOptions = google.maps.MapOptions
 
 export default function LocationMap() {
 
-  const [office, setOffice] = useState<LatLngLiteral>()
   const [directions, setDirections] = useState<DirectionsResult>()
+  const [currentLocation, setCurrentLocation] = useState<LatLngLiteral | null>(null);
   const mapRef = useRef<GoogleMap>()
-  const center = useMemo<LatLngLiteral>(() => ({ lat: 43.45, lng: -80.49 }), [])
+  const center = useMemo<LatLngLiteral>(() => ({ lat: 41.332434, lng: -8.5273209 }), [])
   const options = useMemo<MapOptions>(() => ({
     mapId: "13a84d305d69091b",
     disableDefaultUI: true,
     clickableIcons: false,
   }), [] )
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation({ lat: latitude, lng: longitude });
+      });
+    } else {
+      alert('Geolocation is not supported by your browser');
+    }
+  }, []);
+
   /*const onLoad = useCallback((map: GoogleMap) => {
     mapRef.current = map;
   }, []);*/
   const onLoad = useCallback((map) => (mapRef.current = map), [])
   const houses = useMemo(() => generateHouses(center), [center]) 
   const fetchDirections = (house: LatLngLiteral) => {
-    if(!office) return;
+    if(!currentLocation) return;
 
     const service = new google.maps.DirectionsService()
     service.route(
       {
         origin: house,
-        destination: office,
+        destination: currentLocation,
         travelMode: google.maps.TravelMode.DRIVING
       },
       (result, status) => {
@@ -56,13 +67,13 @@ export default function LocationMap() {
   return <div className='container'>
     <div className='controls'>
       <h1>Commute?</h1>
-      <PlaceDetail setOffice={(position) => {
-        setOffice(position)
+      <PlaceDetail setCurrentLocation={(position) => {
+        setCurrentLocation(position)
         mapRef.current?.panTo(position)
       }} />
     </div>
 
-    {/*!office && <p>Enter the address of your office.</p>*/}
+    {!currentLocation && <p>Enter the address of your office.</p>}
 
     {directions && <Distance leg={directions.routes[0].legs[0]}/>}
 
@@ -84,10 +95,10 @@ export default function LocationMap() {
           }
         }} />}
 
-        { office && ( 
+        { currentLocation && ( 
           <>
             <Marker 
-              position={office} /*icon={image}*/ 
+              position={currentLocation} /*icon={image}*/ 
             />
             
             <MarkerClusterer>
@@ -109,19 +120,19 @@ export default function LocationMap() {
 
 
             <Circle
-              center={office}
+              center={currentLocation}
               radius={1500}
               options={closeOptions}
             />
 
             <Circle
-              center={office}
+              center={currentLocation}
               radius={2000}
               options={middleOptions}
             />
 
             <Circle
-              center={office}
+              center={currentLocation}
               radius={2500}
               options={farOptions}
             />
