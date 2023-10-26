@@ -7,8 +7,8 @@ require_once("db.php");
 
 $depUser = 1;
 
-$result = "SELECT * FROM coordenadas INNER JOIN utilizadores ON utilizadores.departamento = coordenadas.departamento WHERE utilizadores.id = $depUser";
-$result_departamento = $conn->query($result);
+$query_departamentos = "SELECT * FROM coordenadas INNER JOIN utilizadores ON utilizadores.departamento = coordenadas.departamento WHERE utilizadores.id = $depUser";
+$result_departamento = $conn->query($query_departamentos);
 
 if ($result_departamento) {
     $lista_departamentos = array(); // Inicializa um array para armazenar os resultados
