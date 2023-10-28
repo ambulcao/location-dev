@@ -15,17 +15,35 @@ export default function Login() {
   };
 
   const loginSubmit = () => {
-    // Aqui, você pode adicionar sua lógica de autenticação
-    // Se a autenticação falhar, defina a mensagem de erro
-    if (user === 'usuario' && pass === 'senha') {
-      // Autenticação bem-sucedida
-      setMsg('Login bem-sucedido');
-      setError('');
-    } else {
-      // Autenticação falhou
-      setError('Credenciais inválidas');
-      setMsg('');
-    }
+
+    // Aqui, você pode adicionar sua lógica de autenticaçao 
+    // Vamos enviar as crendenciais para o servidor
+    const credentials = { username: user, password: pass };
+
+    fetch('login.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          // Autenticação bem-sucedida, o servidor retornou uma mensagem de sucesso
+          setMsg(data.message);
+          setError('');
+        } else {
+          // Autenticação falhou, o servidor retornou uma mensagem de erro
+          setError(data.message);
+          setMsg('');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro ao fazer login:', error);
+        setError('Erro ao fazer login. Por favor, tente novamente.');
+        setMsg('');
+      });
   };
 
   return (

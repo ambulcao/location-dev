@@ -3,21 +3,24 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 require_once("db.php");
 
-if (isset($_POST["username"]) && isset($_POST["password"])) {
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+$result = $conn->query("SELECT username, password FROM `utilizadores`");
+if ($result) {
+    $users = $result->fetchAll(PDO::FETCH_ASSOC);
 
-  $result = $database->query("SELECT * FROM utilizadores where username='$username' and `password`='$password'");
+    // Preparar um array para armazenar os dados desejados
+    $userData = [];
+    foreach ($users as $user) {
+        $userData[] = [
+            'username' => $user['username'],
+            'password' => $user['password'],
+        ];
+    }
 
-  if ($result->num_rows > 0) {
-    //$response = ["success" => true, "message" => "Login bem-sucedido"];
-    $response = ["success" => true, "message" => "Login bem-sucedido", "username" => $username, "token" => "seu_token"];
+    // Converter o array para JSON
+    $jsonResult = json_encode($userData);
 
-  } else {
-    $response = ["success" => false, "message" => "Credenciais inválidas"];
-  }
-
-  header("Content-Type: application/json");
-  echo json_encode($response);
+    echo $jsonResult;
+} else {
+    echo json_encode(["error" => "Erro na consulta SQL"]);
 }
 ?>
