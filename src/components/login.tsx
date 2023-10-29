@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
   const [error, setError] = useState('');
   const [msg, setMsg] = useState('');
+  const navigate = useNavigate();
 
   const handleInputChange = (e, field) => {
     if (field === 'user') {
@@ -15,26 +17,30 @@ export default function Login() {
   };
 
   const loginSubmit = () => {
-
-    // Aqui, você pode adicionar sua lógica de autenticaçao 
-    // Vamos enviar as crendenciais para o servidor
     const credentials = { username: user, password: pass };
 
-    fetch('login.php', {
+    console.log('Enviando dados para o servidor:', credentials);
+
+    fetch('http://192.168.43.52/github/location-dev/src/api/login.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(credentials),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Erro na solicitação');
+        } else {
+          return response.json();
+        }
+      })
       .then((data) => {
         if (data.success) {
-          // Autenticação bem-sucedida, o servidor retornou uma mensagem de sucesso
           setMsg(data.message);
           setError('');
+          navigate('/home');
         } else {
-          // Autenticação falhou, o servidor retornou uma mensagem de erro
           setError(data.message);
           setMsg('');
         }
@@ -63,17 +69,15 @@ export default function Login() {
                 </div>
                 <div className="col-md-6 col-lg-7 d-flex align-items-center">
                   <div className="card-body p-4 p-lg-5 text-black">
-                    <p>
-                      {error !== '' ? (
-                        <div style={{ color: '#842029' }}>
-                          <b>{error}</b>
-                        </div>
-                      ) : (
-                        <div style={{ color: '#badbcc' }}>
-                          <b>{msg}</b>
-                        </div>
-                      )}
-                    </p>
+                    {error !== '' ? (
+                      <div style={{ color: '#842029' }}>
+                        <b>{error}</b>
+                      </div>
+                    ) : (
+                      <div style={{ color: '#badbcc' }}>
+                        <b>{msg}</b>
+                      </div>
+                    )}
                     <div className="d-flex align-items-center mb-3 pb-1">
                       <i className="fas fa-cubes fa-2x me-3" style={{ color: '#ff6219' }} />
                       <span className="h1 fw-bold mb-0">Login</span>
@@ -85,8 +89,10 @@ export default function Login() {
                       <input
                         type="text"
                         id="username"
+                        name='username'
                         className="form-control form-control-lg"
                         placeholder="User Name"
+                        autoComplete='username'
                         value={user}
                         onChange={(e) => handleInputChange(e, 'user')}
                       />
@@ -95,8 +101,10 @@ export default function Login() {
                       <input
                         type="password"
                         id="pass"
+                        name='password'
                         className="form-control form-control-lg"
                         placeholder="Password"
+                        autoComplete='password'
                         value={pass}
                         onChange={(e) => handleInputChange(e, 'pass')}
                       />

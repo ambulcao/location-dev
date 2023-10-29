@@ -1,26 +1,41 @@
 <?php
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *"); 
 header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Headers: Content-Type"); 
 require_once("db.php");
 
-$result = $conn->query("SELECT username, password FROM `utilizadores`");
-if ($result) {
-    $users = $result->fetchAll(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $data = json_decode(file_get_contents('php://input'));
 
-    // Preparar um array para armazenar os dados desejados
-    $userData = [];
-    foreach ($users as $user) {
-        $userData[] = [
-            'username' => $user['username'],
-            'password' => $user['password'],
-        ];
+  error_log("Received username: " . $data->username);
+  error_log("Received password: " . $data->password);
+  print_r($data->username);
+  print_r($data->password);
+
+  if (isset($data->username) && isset($data->password)) {
+    $username = $data->username;
+    $password = $data->password;
+
+    $result = $conn->prepare("SELECT username, password FROM `utilizadores` WHERE username = :username"); 
+    $result->bindParam(':username', $username);
+    $result->execute();
+    $user = $result->fetch(PDO::FETCH_ASSOC);
+
+    if ($user && password_verify($password, $user['password'])) {
+      $response = ["success" => true, "message" => "Login bem-sucedido"];
+
+      // Você pode adicionar um redirecionamento aqui
+      //header("Location: routes.tsx");
+    } else {
+      $response = ["success" => false, "message" => "Credenciais inválidas"];
     }
-
-    // Converter o array para JSON
-    $jsonResult = json_encode($userData);
-
-    echo $jsonResult;
+  } else {
+    $response = ["success" => false, "message" => "Credenciais não fornecidas"];
+  }
 } else {
-    echo json_encode(["error" => "Erro na consulta SQL"]);
+  $response = ["success" => false, "message" => "Método de solicitação inválido"];
 }
+
+header("Content-Type: application/json");
+echo json_encode($response);
 ?>
