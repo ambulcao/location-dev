@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
@@ -8,15 +8,41 @@ export default function Login() {
   const [msg, setMsg] = useState('');
   const navigate = useNavigate();
 
-  const handleInputChange = (e, field) => {
+  /*const handleInputChange = (e, field) => {
     if (field === 'user') {
       setUser(e.target.value);
     } else if (field === 'pass') {
       setPass(e.target.value);
     }
-  };
+  };*/
 
-  const loginSubmit = () => {
+  useEffect(() => {
+    setTimeout(function () {
+      setMsg("")
+    }, 5000)
+  }, [msg]);
+
+  const handleInputChange = (e, type) => {
+    switch (type) {
+      case "user":
+        setError("");
+        setUser(e.target.value);
+        if (e.target.value === "") {
+          setError("Username has left blank");
+        }
+        break;
+      case "pass":
+        setError("");
+        setPass(e.target.value);
+        if (e.target.value === "") {
+          setError("Password has left blank");
+        }
+        break;
+      default:
+    }
+  }
+
+  /*const loginSubmit = () => {
     const credentials = { username: user, password: pass };
 
     console.log('Enviando dados para o servidor:', credentials);
@@ -50,10 +76,48 @@ export default function Login() {
         setError('Erro ao fazer login. Por favor, tente novamente.');
         setMsg('');
       });
-  };
+  };*/
+
+  function loginSubmit() {
+    if (user !== "" && pass !== "") {
+      const url = "http://localhost:5173/location-dev/api/login.php";
+      const data = { user, pass };
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      }).then((response) => response.json())
+        .then((response) => {
+          console.log('Resposta do servidor:', response); // Adicione esta linha para depurar
+          if (Array.isArray(response) && response[0] && response[0].result !== "Invalid username!" && response[0].result !== "Invalid password!") {
+            setMsg((response[0].result));
+          } else {
+            setError(response[0].result);
+            setTimeout(function () {
+              navigate('/home.tsx')
+            }, 5000)
+          }
+        }).catch((err) => {
+          setError(err);
+          console.log(err);
+        })
+    }
+    else {
+      setError("All field are required!")
+    }
+  }
 
   return (
     <div className="vh-100 d-flex justify-content-center align-items-center" style={{ backgroundColor: '#9A616D' }}>
+      <p>
+        {
+          error !== "" ?
+            <span className='error'>{error}</span> :
+            <span className='success'>{msg}</span>
+        }
+      </p>
       <div className="container py-5 h-100">
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col col-xl-10">

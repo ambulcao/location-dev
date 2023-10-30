@@ -26,10 +26,12 @@ $pass = "";
 $dbname = "devpriximbattfr";
 $port = "3306";
 
-$conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
+//$conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
 try {
-  $conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
-  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conn = new mysqli($host, $user, $pass, $dbname);
+  mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+  //$conn = new PDO("mysql:host=$host;port=$port;dbname=". $dbname, $user, $pass);
+  //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   //echo "Conectado com sucesso";
 } catch(PDOException $e) {
   echo "Erro na conexão com o banco de dados: " . $e->getMessage();
