@@ -1,5 +1,5 @@
 import { useLoadScript } from '@react-google-maps/api';
-import LocationMap from '../Mapa/Map';
+import LocationMap from '../Mapa/map';
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
