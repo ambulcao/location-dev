@@ -1,6 +1,7 @@
 import React from "react";
 import "./Login.scss";
 import { Link } from "react-router-dom";
+import { FaUserShield } from 'react-icons/fa';
 import video from "../../LoginAssets/video.webm";
 import videoWebm from "../../LoginAssets/video.mp4";
 import logo from "../../LoginAssets/logo.png";
@@ -34,6 +35,16 @@ const Login = () => {
             <img src={logo} alt="Logo Image" />
             <h3>Welcome Back!</h3>
           </div>
+
+          <form action="" className="form grid">
+            <span>Login Status will go here</span>
+            <div className="inputDiv">
+              <label htmlFor="username">Username</label>
+              <div className="input flex">
+                <FaUserShield className='icon'/>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
