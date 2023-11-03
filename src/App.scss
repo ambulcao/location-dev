@@ -59,8 +59,8 @@ li {
 }
 
 img, video {
-  height: 50%;
-  width: 50%;
+  height: 80%;
+  width: 80%;
 }
 
 .message {
@@ -136,4 +136,42 @@ img, video {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 7px 50px rgb(214, 223, 213);
+
+  .container {
+    height: 75vh;
+    width: 60%;
+    margin: auto;
+    justify-content: space-between;
+    border-radius: 10px;
+    background: hsl(0, 0%, 91%);
+
+    .videoDiv {
+      position: relative;
+      display: flex;
+      flex-basis: 150%;
+      width: 70%;
+      height: 100%;
+      padding: 0 1.5rem;
+      text-align: center;
+      justify-content: center;
+      flex-direction: column;
+      margin: auto;
+      border-radius: 10px;
+      overflow: hidden;
+
+      video, .footerDiv {
+        position: absolute;
+      }
+
+      video {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+      }
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import "./Login.scss";
+import "../../App.scss";
 import { Link } from "react-router-dom";
 import { FaUserShield } from 'react-icons/fa';
 import { BsFillShieldLockFill } from 'react-icons/bs';
