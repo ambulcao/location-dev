@@ -68,9 +68,10 @@ img, video {
 }
 
 .showMessage {
-  font-display: block;
+  display: block;
   color: var(--whiteColor);
-  background: rgb(255,0,0);
+  padding: 10px;
+  background: var(--primaryColor);
   border-radius: 3px;
   text-align: center;
 }
@@ -247,6 +248,7 @@ img, video {
           font-size: 25px;
           color: var(--blackColor);
           font-weight: 600;
+          margin-bottom: -1.5rem;
         }
       }   
 
