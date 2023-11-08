@@ -9,5 +9,9 @@ export default function Home() {
 
   if (!isLoaded) return <div>Loading...</div>;
   
-  return <LocationMap />;
+  return ( 
+    <div className='home flex'>
+      <LocationMap />;
+    </div>
+  )
 }
