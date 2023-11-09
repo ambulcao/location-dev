@@ -8,6 +8,7 @@ import { FaUserShield } from 'react-icons/fa';
 import { FaUserPlus } from 'react-icons/fa';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 import { AiOutlineSwapRight } from 'react-icons/ai';
+import { MdMarkEmailRead } from 'react-icons/md';
 
 import video from "../../LoginAssets/video.webm";
 import videoWebm from "../../LoginAssets/video.mp4";
@@ -99,13 +100,13 @@ const Register = () => {
             </div>
 
             <div className="inputDiv">
-              <label htmlFor="lastName">Last Name</label>
+              <label htmlFor="lastName">Email</label>
               <div className="input flex">
-                <FaUserPlus className='icon' />
+                <MdMarkEmailRead className='icon' />
                 <input
                   type="text"
                   id="lastname"
-                  placeholder="Enter Last Name"
+                  placeholder="Enter your E-mail"
                   onChange={(event) => {
                     setlastName(event.target.value)
                   }}
