@@ -4,8 +4,8 @@ import "../../App.scss";
 import { Link } from "react-router-dom";
 import Axios from 'axios';
 
-//import { MdMarkEmailRead } from 'react-icons/md';
 import { FaUserShield } from 'react-icons/fa';
+import { FaUserPlus } from 'react-icons/fa';
 import { BsFillShieldLockFill } from 'react-icons/bs';
 import { AiOutlineSwapRight } from 'react-icons/ai';
 
@@ -14,27 +14,31 @@ import videoWebm from "../../LoginAssets/video.mp4";
 import logo from "../../LoginAssets/logo.png";
 
 const Register = () => {
+  const [userName, setUserName] = useState('');
+  const [firstName, setfirstName] = useState('');
+  const [lastName, setlastName] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  // UseState to hold our inputs
-  //const [email, setEmail] = useState('')
-  const [userName, setUserName] = useState('')
-  const [password, setPassword] = useState('')
-
-  // Onclick let us get what the user has entered
-  const createUser = () => {
-    // We shall require Axios to create an API that connects to the server
+  const handleRegistration = () => {
     Axios.post('http://localhost:3002/register', {
-      // create variable to send to the server through the route
-      //Email: email,
       UserName: userName,
+      FirstName: firstName,
+      LastName: lastName,
       Password: password
-    }).then(() => {
-      console.log('User has been created')
     })
+      .then(() => {
+        console.log('User has been created');
+      })
+      .catch((error) => {
+        console.error('Error creating user', error);
+        console.error('Error creating user', errorMessage);
+        setErrorMessage('Error creating user. Please try again.');
+      });
   }
 
   return (
-    <div className="registerPage flex">
+      <div className="registerPage flex">
       <div className="container flex">
         <div className="videoDiv">
           <video autoPlay loop>
@@ -63,20 +67,6 @@ const Register = () => {
           </div>
 
           <form action="" className="form grid">
-            {/*<div className="inputDiv">
-              <label htmlFor="email">Email</label>
-              <div className="input flex">
-                <MdMarkEmailRead className='icon' />
-                <input
-                  type="email"
-                  id="email"
-                  placeholder="Enter Email"
-                  onChange={(event) => {
-                    setEmail(event.target.value)
-                  }}
-                />
-              </div>
-            </div>*/}
 
               <div className="inputDiv">
                 <label htmlFor="username">Username</label>
@@ -94,6 +84,36 @@ const Register = () => {
               </div>
 
               <div className="inputDiv">
+              <label htmlFor="firstName">First Name</label>
+              <div className="input flex">
+                <FaUserPlus className='icon' />
+                <input
+                  type="text"
+                  id="firstname"
+                  placeholder="Enter First Name"
+                  onChange={(event) => {
+                    setfirstName(event.target.value)
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="inputDiv">
+              <label htmlFor="lastName">Last Name</label>
+              <div className="input flex">
+                <FaUserPlus className='icon' />
+                <input
+                  type="text"
+                  id="lastname"
+                  placeholder="Enter Last Name"
+                  onChange={(event) => {
+                    setlastName(event.target.value)
+                  }}
+                />
+              </div>
+            </div>
+
+              <div className="inputDiv">
                 <label htmlFor="password">Password</label>
                 <div className="input flex">
                   <BsFillShieldLockFill className='icon' />
@@ -108,7 +128,7 @@ const Register = () => {
                 </div>
               </div>
 
-              <button type="submit" className="btn flex" onClick={createUser}>
+              <button type="submit" className="btn flex" onClick={handleRegistration}>
                 <span>Register </span>
                 <AiOutlineSwapRight className='icon' />
               </button>
@@ -120,7 +140,7 @@ const Register = () => {
             </form>
         </div>
       </div>
-    </div>
+      </div>
   );
 };
 
