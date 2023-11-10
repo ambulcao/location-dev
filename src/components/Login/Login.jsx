@@ -104,7 +104,10 @@ const Login = () => {
               <AiOutlineSwapRight className='icon' />
             </button>
 
-            <span className="btn showMessage flex">{loginStatus}</span>
+            {/* Condição para exibir a mensagem apenas quando necessário */}
+            {loginStatus === 'Credentials do not match' && (
+              <span className="btn-message showBtnMessage flex">{loginStatus}</span>
+            )}
 
             <a href="/home">Mapa</a>
 

@@ -19,6 +19,7 @@
   --bgColor: hsl(330, 12%, 97%);
   --inputColor: hsl(330, 12%, 97%);
   --inputColor: hsl(154, 14%, 90%);
+  --alertbtn: hsl(0, 100%, 75%);
 
   /* Font ang Typography */
   --biggestFontSize: 2.5rem;
@@ -80,6 +81,23 @@ img, video {
   border: none;
   outline: none;
   cursor: pointer;
+  border-radius: 8px;
+  padding: .8rem 1rem;
+  color: var(--blackColor);
+}
+
+.showBtnMessage {
+  display: block;
+  color: var(--whiteColor);
+  padding: 10px;
+  background: var(--alertbtn);
+  border-radius: 3px;
+  text-align: center;
+}
+
+.btn-message {
+  border: none;
+  outline: none;
   border-radius: 8px;
   padding: .8rem 1rem;
   color: var(--blackColor);
