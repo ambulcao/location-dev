@@ -22,16 +22,16 @@ const Login = () => {
       UserName: loginUserName,
       Password: loginPassword
     })
-      .then((response) => {
-        console.log(response)
-        if(response.data.length > 0) {
-          setLoginStatus('Login successful')
-          //Redirecionar para a página desejada após o login
-          navigate("/home")
-        } else {
-          setLoginStatus('Credentials do not match')
-        }
-      })
+    .then((response) => {
+      console.log(response);
+      if (response.data && response.data.length > 0) {
+        setLoginStatus('Login successful');
+        // Redirecionar para a página desejada após o login
+        navigate("/home");
+      } else {
+        setLoginStatus('Credentials do not match');
+      }
+    })
       .catch((error) => {
         console.error('Error during login', error)
         setLoginStatus('Error during login. Please try again.')

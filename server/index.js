@@ -42,19 +42,25 @@ app.post('/register', (req, res) => {
 // Now we need to Login with these credentials from a registered User
 
 app.post('/login', (req, res) => {
-  const { LoginUserName, LoginPassword } = req.body
+  const { LoginUserName, LoginPassword } = req.body;
 
-  const SQL = 'SELECT * FROM utilizadores WHERE username = ? && password = ?'
-  const values = [LoginUserName, LoginPassword]
+  console.log('Received login request:', LoginUserName, LoginPassword);
+
+  const SQL = 'SELECT * FROM utilizadores WHERE username = ? && password = ?';
+  const values = [LoginUserName, LoginPassword];
 
   db.query(SQL, values, (err, results) => {
     if (err) {
-      res.send({error: err})
-    } if (results.length > 0) {
-      res.send(results)
+      console.error('Error during query:', err);
+      res.status(500).send({ error: err });
     } else {
-      res.send({message: `Credentials Don't match!`})
+      console.log('Query results:', results);
+      if (results.length > 0) {
+        res.status(200).send(results);
+      } else {
+        res.status(401).send({ message: `Credentials Don't match!` });
+      }
     }
-  })
-})
+  });
+});
 
