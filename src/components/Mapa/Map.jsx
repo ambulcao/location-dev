@@ -1,4 +1,5 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect, useReducer } from 'react';
+import { useNavigate } from 'react-router-dom'
 import {
   GoogleMap,
   Marker,
@@ -6,7 +7,7 @@ import {
   Circle,
   MarkerClusterer
 } from '@react-google-maps/api'
-//import '../App.css'
+import { useAuth } from '../Login/AuthContext'
 import  PlaceDetail  from '../placeDetail';
 import  Distance  from '../distance';
 import { Loader } from '@googlemaps/js-api-loader'
@@ -68,6 +69,19 @@ export default function LocationMap() {
     )
   }
   //const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
+
+  const { authenticated, logout } = useAuth()
+
+  console.log(authenticated);
+  const navigate = useNavigate()
+
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login')
+    forceUpdate()
+  }
         
   return <div className='container'>
     <div className='controls'>
@@ -80,6 +94,11 @@ export default function LocationMap() {
       {!currentLocation && <p>Enter the address of your office.</p>}
       <br/>
       {directions && <Distance leg={directions.routes[0].legs[0]}/>}
+
+      {authenticated && (
+        <button onClick={handleLogout} className="btn logout">Logout</button>
+      )}
+
     </div>
 
     <div className='map'>

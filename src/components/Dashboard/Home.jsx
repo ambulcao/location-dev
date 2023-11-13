@@ -1,8 +1,5 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useLoadScript } from '@react-google-maps/api'
-import LocationMap from '../Mapa/map'
-import { useAuth } from '../Login/AuthContext'
+import { useLoadScript } from '@react-google-maps/api';
+import LocationMap from '../Mapa/map';
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -10,24 +7,11 @@ export default function Home() {
     libraries: ["places"],
   });
 
-  const { authenticated, logout } = useAuth()
+  if (!isLoaded) return <div>Loading...</div>;
 
-  console.log(authenticated);
-  const navigate = useNavigate()
-
-  if (!isLoaded) return <div>Loading...</div>
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login')
-  }
-  
   return ( 
     <div className='home flex'>
-      {(
-          <button onClick={handleLogout} className="btn logout">Logout</button>
-      ) && authenticated}
-      <LocationMap />
+      <LocationMap />;
     </div>
   )
 }

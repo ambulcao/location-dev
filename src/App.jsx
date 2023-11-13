@@ -1,34 +1,14 @@
-import './App.scss'
-import Home from './components/Dashboard/Home'
-import Login from './components/Login/Login'
-import Register from './components/Register/Register'
-
-import {
-    createBrowserRouter,
-    RouterProvider
-} from 'react-router-dom'
-
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <div><Login /></div>
-    },
-    {
-        path: '/register',
-        element: <div><Register /></div>
-    },
-    {
-        path: '/home',
-        element: <div><Home/></div>
-    }
-])
+import React from 'react';
+import './App.scss';
+import { RouterProvider } from 'react-router-dom';
+import MainRouter from './MainRouter';
 
 function App() {
-    return(
-        <RouterProvider 
-            router={router}
-        />
-    )
+  return (
+    <RouterProvider>
+      <MainRouter />
+    </RouterProvider>
+  );
 }
 
-export default App
+export default App;
