@@ -44,9 +44,9 @@ app.post('/register', (req, res) => {
 app.post('/login', (req, res) => {
   const { LoginUserName, LoginPassword } = req.body;
 
-  console.log('Received login request:', LoginUserName, LoginPassword);
+  console.log('Sending login request:', LoginUserName, LoginPassword);
 
-  const SQL = 'SELECT * FROM utilizadores WHERE username = ? && password = ?';
+  const SQL = 'SELECT * FROM utilizadores WHERE LOWER(username) = LOWER(?) && password = ?';
   const values = [LoginUserName, LoginPassword];
 
   db.query(SQL, values, (err, results) => {

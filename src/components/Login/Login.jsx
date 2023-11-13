@@ -19,8 +19,8 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     axios.post('http://localhost:3002/login', {
-      UserName: loginUserName,
-      Password: loginPassword
+      LoginUserName: loginUserName,
+      LoginPassword: loginPassword
     })
     .then((response) => {
       console.log(response);
