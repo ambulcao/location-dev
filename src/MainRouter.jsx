@@ -20,7 +20,7 @@ const routes = [
   // Adicione mais rotas conforme necessário
 ];
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter({ routes });
 
 function MainRouter() {
   return (
