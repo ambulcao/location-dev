@@ -24,6 +24,7 @@ const router = createBrowserRouter([
 ])
 
 function App() {
+    const login = window.localStorage.getItem("isLogedIn")
     return(
         <RouterProvider 
             router={router}

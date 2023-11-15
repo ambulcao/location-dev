@@ -18,7 +18,7 @@ const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    
+    window.localStorage.setItem("isLogedIn", true)
     axios.post('http://localhost:3002/login', {
       LoginUserName: loginUserName,
       LoginPassword: loginPassword
