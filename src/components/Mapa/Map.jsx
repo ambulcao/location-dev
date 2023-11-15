@@ -1,5 +1,6 @@
-import { useState, useMemo, useCallback, useRef, useEffect, useReducer } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useState, useMemo, useCallback, useRef, useEffect, useReducer  } from 'react';
+import { useNavigate } from 'react-router-dom';
+import $ from 'jquery';
 import {
   GoogleMap,
   Marker,
@@ -7,7 +8,6 @@ import {
   Circle,
   MarkerClusterer
 } from '@react-google-maps/api'
-import { useAuth } from '../Login/AuthContext'
 import  PlaceDetail  from '../placeDetail';
 import  Distance  from '../distance';
 import { Loader } from '@googlemaps/js-api-loader'
@@ -20,7 +20,7 @@ import { Loader } from '@googlemaps/js-api-loader'
 
 
 export default function LocationMap() {
-
+  const navigate = useNavigate();
   const [directions, setDirections] = useState()
   const [currentLocation, setCurrentLocation] = useState(null);
   const mapRef = useRef()
@@ -69,19 +69,25 @@ export default function LocationMap() {
     )
   }
   //const image = "https://developers.google.com/maps/documentation/javascript/exemples/full/images/beachflag.png";
-
-  const { authenticated, logout } = useAuth()
-
-  console.log(authenticated);
-  const navigate = useNavigate()
-
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
-
   const handleLogout = () => {
     logout();
     navigate('/login')
     forceUpdate()
   }
+
+  function logout() {
+    $.ajax({
+       url: 'logout.php',
+       type: 'GET',
+       success: function() {
+          window.location.href = "/home"
+       },
+       error: function(result) {
+          console.log(result);
+       }
+    })
+ }
         
   return <div className='container'>
     <div className='controls'>
@@ -95,9 +101,7 @@ export default function LocationMap() {
       <br/>
       {directions && <Distance leg={directions.routes[0].legs[0]}/>}
 
-      {authenticated && (
-        <button onClick={handleLogout} className="btn logout">Logout</button>
-      )}
+      <button onClick={handleLogout} className="btn logout">Logout</button>
 
     </div>
 
