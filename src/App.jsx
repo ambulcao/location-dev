@@ -1,5 +1,5 @@
 import './App.scss'
-import Home from './components/Dashboard/Home'
+import Home from './components/Home/Home'
 import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 
@@ -11,7 +11,7 @@ import {
 const router = createBrowserRouter([
     {
         path: '/',
-        element: {login ? <Home/> : <div><Login /></div>}
+        element: <div><Login /></div>
     },
     {
         path: '/register',
@@ -24,7 +24,6 @@ const router = createBrowserRouter([
 ])
 
 function App() {
-    const login = window.localStorage.getItem("isLogedIn")
     return(
         <RouterProvider 
             router={router}

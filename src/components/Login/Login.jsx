@@ -16,19 +16,26 @@ const Login = () => {
   const [loginStatus, setLoginStatus] = useState('')
   const navigate = useNavigate();
 
+  axios.defaults.withCredentials = true
   const handleLogin = (e) => {
     e.preventDefault();
     window.localStorage.setItem("isLogedIn", true)
     axios.post('http://localhost:3002/login', {
       LoginUserName: loginUserName,
       LoginPassword: loginPassword
+    },{
+      withCredentials: true
     })
     .then((response) => {
-      console.log(response);
-      if (response.data && response.data.length > 0) {
-        setLoginStatus('Login successful');
-        // Redirecionar para a página desejada após o login
-        navigate("/home");
+      console.log(response.data);
+      if (response.data.Status && response.data.length > 0) {
+        const userRole = response.data[0].role;
+        if (userRole === "Admin") {
+        setLoginStatus('Login successful')
+        navigate("/dashboard")
+        } else {
+          navigate("/")
+        }
       } else {
         setLoginStatus('Credentials do not match');
       }
@@ -105,7 +112,7 @@ const Login = () => {
               <AiOutlineSwapRight className='icon' />
             </button>
 
-            {/* Condição para exibir a mensagem apenas quando necessário */}
+            {/* Condição para exibir a mensagem apenas quando o login não autenticar */}
             {loginStatus === 'Credentials do not match' && (
               <span className="btn-message showBtnMessage flex">{loginStatus}</span>
             )}
