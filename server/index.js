@@ -67,3 +67,18 @@ app.post('/login', (req, res) => {
   });
 });
 
+// rota para buscar os dados de latitude e longitude 
+
+app.get('/coordinates', (req, res) => {
+  const SQL = 'SELECT latitude, longitude FROM coordenadas';
+  
+  db.query(SQL, (err, results) => {
+    if (err) {
+      console.error('Error fetching coordinates:', err);
+      res.status(500).send({ error: err });
+    } else {
+      console.log('Coordinates fetched successfully:', results);
+      res.status(200).send(results);
+    }
+  });
+});

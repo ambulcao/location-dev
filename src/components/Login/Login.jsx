@@ -122,6 +122,9 @@ const Login = () => {
               <span className="btn-message showBtnMessage flex">{loginStatus}</span>
             )}
 
+            <span>To test</span>
+            <span>User: user10</span>
+            <span>Password: 123</span>
             {/*<a href="/home">Mapa</a>*/}
             {/*<Link to="/home">Mapa</Link>*/}
 
