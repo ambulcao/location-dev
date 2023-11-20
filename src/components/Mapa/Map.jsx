@@ -12,12 +12,6 @@ import  PlaceDetail  from '../placeDetail';
 import  Distance  from '../distance';
 import { Loader } from '@googlemaps/js-api-loader'
 
-//import Distance from './distance'
-
-//type LatLngLiteral = google.maps.LatLngLiteral
-//type DirectionsResult = google.maps.DirectionsResult
-//type MapOptions = google.maps.MapOptions
-
 
 export default function LocationMap() {
   const navigate = useNavigate();

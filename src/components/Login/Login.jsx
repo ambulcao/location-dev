@@ -28,13 +28,18 @@ const Login = () => {
     })
     .then((response) => {
       console.log(response.data);
-      if (response.data.Status && response.data.length > 0) {
-        const userRole = response.data[0].role;
+      if (response.data.length > 0) {
+        const user = response.data[0];
+    
+        // Exemplo: Se o usuário tiver um departamento, considere-o como "Admin"
+        const userRole = user.departamento ? "Admin" : "User";
+    
         if (userRole === "Admin") {
-        setLoginStatus('Login successful')
-        navigate("/dashboard")
+          setLoginStatus('Login successful');
+          navigate("/dashboard");
         } else {
-          navigate("/")
+          console.log("Redirecting to /home");
+          navigate("/home");
         }
       } else {
         setLoginStatus('Credentials do not match');
@@ -117,7 +122,8 @@ const Login = () => {
               <span className="btn-message showBtnMessage flex">{loginStatus}</span>
             )}
 
-            <a href="/home">Mapa</a>
+            {/*<a href="/home">Mapa</a>*/}
+            {/*<Link to="/home">Mapa</Link>*/}
 
             <span className="forgotPassword">
               Forgot yout password? <a href="">Click Here</a>
