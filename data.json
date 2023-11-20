@@ -2,14 +2,333 @@
     "dados": [
         {
             "id_cliente": 1,
-            "nome": 
-            "morada": 
-            "telefone": 
-            "telefone2": 
-            "latitude": 
-            "longitude": 
-            "departamento": 
-            "pertence_nfi": 
+            "nome": "Quillot ETS",
+            "morada": "Valserhône 12 Bis rue Joseph Marion 01200 Bellegarde sur Valserine",
+            "telefone": "04 50 56 01 03",
+            "telefone2": null,
+            "latitude": "46.10784050000000000000",
+            "longitude": "5.83149090000000000000",
+            "departamento": "1",
+            "pertence_nfi": "Não"
+        },
+        {
+            "id_cliente": 2,
+            "nome": "MFA Maison Française De L'Artisanat",
+            "morada": "550 avenue Charles de Gaulle 01330 Villars les Dombes",
+            "telefone": "04 78 55 29 03",
+            "telefone2": null,
+            "latitude": "46.00170900000000000000",
+            "longitude": "5.03075330000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 3,
+            "nome": "C2M Morand Bourg-en-Bresse - Groupe Morand",
+            "morada": "205 rue Marius Berliet 01000 Bourg en Bresse",
+            "telefone": "04 74 22 48 70",
+            "telefone2": null,
+            "latitude": "46.22497699999999600000",
+            "longitude": "5.22998699999999950000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 4,
+            "nome": "Ain Ratable Fermetures",
+            "morada": "68 rue Verchères 01150 Chazey sur Ain",
+            "telefone": "06 85 08 81 17",
+            "telefone2": null,
+            "latitude": "45.89156080000000000000",
+            "longitude": "5.25462120000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 5,
+            "nome": "Cimeo Concept",
+            "morada": "143 Nantuy Trepont, 01110 Hauteville Lompnes",
+            "telefone": "06 23 73 69 14",
+            "telefone2": null,
+            "latitude": "45.96922389999999600000",
+            "longitude": "5.57529000000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 6,
+            "nome": "Ain Pose Ta Fenêtre",
+            "morada": "660 route Port 01150 Lagnieu",
+            "telefone": "06 60 45 46 68",
+            "telefone2": null,
+            "latitude": "45.89625489999999500000",
+            "longitude": "5.34698450000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 7,
+            "nome": "JF Menuiseries",
+            "morada": "lotissement Jardins de Florence 01340 Montrevel en Bresse",
+            "telefone": "06 03 80 22 69",
+            "telefone2": null,
+            "latitude": "46.32389070000000000000",
+            "longitude": "5.10827710000000000000",
+            "departamento": "1",
+            "pertence_nfi": "Não"
+        },
+        {
+            "id_cliente": 8,
+            "nome": "Menuiserie Poncet",
+            "morada": "rue Tuilerie 01540 Vonnas",
+            "telefone": "04 13 68 29 46",
+            "telefone2": null,
+            "latitude": "46.21961500000000000000",
+            "longitude": "4.99247000000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 9,
+            "nome": "AC2 Isolation",
+            "morada": "Centre Vert Futur 6 rue Artisanat 01710 Thoiry",
+            "telefone": "04 50 56 03 25",
+            "telefone2": null,
+            "latitude": "46.22538309999999500000",
+            "longitude": "5.99211409999999900000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 10,
+            "nome": "Menuiserie Jacquet",
+            "morada": "32 route Croix Carrée 01370 Bény",
+            "telefone": "04 74 42 02 18",
+            "telefone2": null,
+            "latitude": "46.32051000000000000000",
+            "longitude": "5.28421400000000000000",
+            "departamento": "1",
+            "pertence_nfi": "Não"
+        },
+        {
+            "id_cliente": 11,
+            "nome": "Bonesi Jean-Pierre",
+            "morada": "580 rue Albarine 01500 Bettant",
+            "telefone": "06 67 90 14 39",
+            "telefone2": null,
+            "latitude": "45.94646320000000000000",
+            "longitude": "5.35619900000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 12,
+            "nome": "Fabrice Desvignes",
+            "morada": "hameau Blanaz 01230 Saint Rambert en Bugey",
+            "telefone": "04 74 35 25 78",
+            "telefone2": null,
+            "latitude": "45.92541600000000000000",
+            "longitude": "5.44673700000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 13,
+            "nome": "Morand Bellignat - Groupe Morand",
+            "morada": "21 route d'Alex 01100 Bellignat",
+            "telefone": "04 74 73 99 46",
+            "telefone2": null,
+            "latitude": "46.23427030000000000000",
+            "longitude": "5.62873579999999900000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 14,
+            "nome": "Carraz Métallerie",
+            "morada": "160 avenue Normandie Niemen 01200 Châtillon en Michaille",
+            "telefone": "04 50 48 06 61",
+            "telefone2": null,
+            "latitude": "46.11907710000000000000",
+            "longitude": "5.80829080000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 15,
+            "nome": "Miroiterie Ranneaud",
+            "morada": "173 rue Anatole France 01100 Oyonnax",
+            "telefone": "03 84 47 52 59",
+            "telefone2": null,
+            "latitude": "46.25425490000000000000",
+            "longitude": "5.65288309999999950000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 16,
+            "nome": "Morand Ambérieu - Groupe Morand",
+            "morada": "69 impasse des Perdrix 01500 Château Gaillard",
+            "telefone": "04 74 46 75 07",
+            "telefone2": null,
+            "latitude": "45.97832400000000000000",
+            "longitude": "5.32058700000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 17,
+            "nome": "Menuiserie Raffin Rouge",
+            "morada": "216 chemin Vers Le Mont 01000 Saint Denis lès Bourg",
+            "telefone": "04 74 24 24 95",
+            "telefone2": null,
+            "latitude": "46.20827900000000000000",
+            "longitude": "5.17967490000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 18,
+            "nome": "Portails Newart",
+            "morada": "route Lyon 01630 Péron",
+            "telefone": "04 50 59 15 06",
+            "telefone2": null,
+            "latitude": "46.18787200000000000000",
+            "longitude": "5.93009770000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 19,
+            "nome": "Ronzat Menuiseries Extérieures",
+            "morada": "63 rue Alexandre Bérard 01500 Ambérieu en Bugey",
+            "telefone": "04 74 34 54 87",
+            "telefone2": null,
+            "latitude": "45.96228130000000000000",
+            "longitude": "5.35653360000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 20,
+            "nome": "Cotière Fermetures",
+            "morada": "6111 chemin Sermoraz 01700 Beynost",
+            "telefone": "04 72 88 20 19",
+            "telefone2": null,
+            "latitude": "45.82786369999999500000",
+            "longitude": "4.99740730000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 21,
+            "nome": "Eddy Gay",
+            "morada": "125 route Belleville 01090 Montceaux",
+            "telefone": "06 35 27 10 52",
+            "telefone2": null,
+            "latitude": "46.09613900000000000000",
+            "longitude": "4.79741190000000100000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 22,
+            "nome": "SIRF EURL",
+            "morada": "Parc Du Colvert 259 rue Chartinieres 01120 Dagneux",
+            "telefone": "04 78 31 12 28",
+            "telefone2": null,
+            "latitude": "45.83849199999999500000",
+            "longitude": "5.06616400000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 23,
+            "nome": "Morel Services Décostory",
+            "morada": "19 rue Gabriel Vicaire 01160 Pont d'Ain",
+            "telefone": "04 74 39 15 55",
+            "telefone2": null,
+            "latitude": "46.04190000000000000000",
+            "longitude": "5.33620820000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 24,
+            "nome": "Ppf Sarl",
+            "morada": "150 rue Georges Charpak 01390 Civrieux",
+            "telefone": "04 26 00 64 24",
+            "telefone2": null,
+            "latitude": "45.90400040000000000000",
+            "longitude": "4.88071100000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 25,
+            "nome": "Eden Habitat",
+            "morada": "375 impasse Calidon 01000 Saint Denis lès Bourg",
+            "telefone": "04 74 21 54 47",
+            "telefone2": null,
+            "latitude": "46.21174040000000000000",
+            "longitude": "5.20716260000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 26,
+            "nome": "Rhône Alpes Stores SARL",
+            "morada": "Zone Industrielle quai Rhône 01700 Miribel",
+            "telefone": "04 78 55 43 32",
+            "telefone2": null,
+            "latitude": "45.82173700000000000000",
+            "longitude": "4.95520240000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 27,
+            "nome": "Mon Grand Menuisier",
+            "morada": "16 domaine Coquelicots 01960 Saint André sur Vieux Jonc",
+            "telefone": "06 62 92 26 96",
+            "telefone2": null,
+            "latitude": "46.15918500000000000000",
+            "longitude": "5.14883099999999950000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 28,
+            "nome": "Eurl Cuisines Perret",
+            "morada": "rue Bachas 01150 Lagnieu",
+            "telefone": "04 37 86 63 97",
+            "telefone2": null,
+            "latitude": "45.91494090000000000000",
+            "longitude": "5.33568070000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 29,
+            "nome": "DYD Rénov",
+            "morada": "52 rue Lacs 01300 Conzieu",
+            "telefone": "07 82 01 03 41",
+            "telefone2": null,
+            "latitude": "45.72595159999999500000",
+            "longitude": "5.60642280000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
+        },
+        {
+            "id_cliente": 30,
+            "nome": "Clairbaie Sarl",
+            "morada": "205 rue Lavy 01570 Manziat",
+            "telefone": "03 85 30 14 94",
+            "telefone2": null,
+            "latitude": "46.35266600000000000000",
+            "longitude": "4.90380940000000000000",
+            "departamento": "1",
+            "pertence_nfi": "não"
         }
     ]
 }
