@@ -13,11 +13,12 @@ import {
   Marker,
   DirectionsRenderer,
   Circle,
-  MarkerClusterer,
+  //MarkerClusterer
 } from "@react-google-maps/api";
 import PlaceDetail from "../placeDetail";
 import Distance from "../distance";
 import { Loader } from "@googlemaps/js-api-loader";
+import data from '../../data.json';
 
 export default function LocationMap() {
   const [coordinates, setCoordinates] = useState([]);
@@ -56,9 +57,11 @@ export default function LocationMap() {
   useEffect(() => {
     const fetchCoordinates = async () => {
       try {
-        const response = await fetch("http://localhost:3002/coordinates");
-        const data = await response.json();
-        setCoordinates(data);
+        // Fetch coordinates from the data.json file
+        setCoordinates(data.dados.map((cliente) => ({
+          latitude: parseFloat(cliente.latitude),
+          longitude: parseFloat(cliente.longitude),
+        })));
       } catch (error) {
         console.error("Error fetching coordinates:", error);
       }
@@ -68,7 +71,7 @@ export default function LocationMap() {
   }, []);
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-  const houses = useMemo(() => generateHouses(center), [center]);
+  
   const fetchDirections = (house) => {
     if (!currentLocation) return;
 
@@ -106,6 +109,8 @@ export default function LocationMap() {
       },
     });
   }
+
+  const houses = useMemo(() => generateHouses(center), [center]);
 
   return (
     <div className="container">
@@ -160,16 +165,19 @@ export default function LocationMap() {
                 }}
               />
 
-              {/* Renderiza marcadores para as coordenadas da tabela de coordenadas */}
-              {coordinates.map((coord) => (
-                <Marker
-                  key={`${coord.latitude}-${coord.longitude}`}
-                  position={{ lat: coord.latitude, lng: coord.longitude }}
-                  onClick={() => {
-                    // Lógica ao clicar no marcador da tabela de coordenadas, se necessário
-                  }}
-                />
-              ))}
+              {/* Renderiza marcadores para os clientes */}
+          {data.dados.map((cliente) => (
+            <Marker
+              key={cliente.id_cliente}
+              position={{
+                lat: parseFloat(cliente.latitude),
+                lng: parseFloat(cliente.longitude),
+              }}
+              onClick={() => {
+                // Lógica ao clicar no marcador do cliente, se necessário
+              }}
+            />
+          ))}
 
               <Circle
                 center={currentLocation}
