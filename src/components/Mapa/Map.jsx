@@ -1,9 +1,33 @@
 import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
-import { GoogleMap, Marker, Circle } from "@react-google-maps/api";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { Loader } from "@googlemaps/js-api-loader";
+import { useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
+import '../../App.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+Modal.setAppElement("#root");
 
 export default function LocationMap() {
+  const navigate = useNavigate()
   const [currentLocation, setCurrentLocation] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState({ lat: 0, lng: 0 });
+
+  const Logout = () => {
+    window.localStorage.removeItem("isLogedIn")
+    navigate('/')
+  }
+
+  const openModal = useCallback((position) => {
+    setModalContent(position);
+    setModalIsOpen(true);
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setModalIsOpen(false);
+  }, []);
+
   const mapRef = useRef();
   const center = useMemo(() => ({ lat: 41.332434, lng: -8.5273209 }), []);
   const options = useMemo(() => ({
@@ -22,7 +46,12 @@ export default function LocationMap() {
       if ("geolocation" in navigator) {
         navigator.geolocation.getCurrentPosition((position) => {
           const { latitude, longitude } = position.coords;
-          setCurrentLocation({ lat: latitude, lng: longitude });
+
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            setCurrentLocation({ lat: latitude, lng: longitude });
+          } else {
+            console.error("Invalid coordinates:", position.coords);
+          }
         });
       } else {
         alert("Geolocation is not supported by your browser");
@@ -37,72 +66,43 @@ export default function LocationMap() {
       <GoogleMap
         zoom={10}
         center={center}
-        mapContainerStyle={{ height: "100%", width: "100%" }}
+        mapContainerStyle={{ height: "100vh", width: "100%" }}
         options={options}
         onLoad={onLoad}
       >
+        {/* Marker for current location */}
         {currentLocation && (
-          <>
-            <Marker
-              position={currentLocation}
-              onClick={() => {
-                // Lógica ao clicar no marcador da localização corrente, se necessário
-              }}
-            />
-
-            <Circle
-              center={currentLocation}
-              radius={1500}
-              options={{
-                strokeOpacity: 0.5,
-                strokeWeight: 2,
-                clickable: false,
-                draggable: false,
-                editable: false,
-                visible: true,
-                fillOpacity: 0.05,
-                strokeColor: "#8BC34A",
-                fillColor: "#8BC34A",
-                zIndex: 3,
-              }}
-            />
-
-            <Circle
-              center={currentLocation}
-              radius={2000}
-              options={{
-                strokeOpacity: 0.5,
-                strokeWeight: 2,
-                clickable: false,
-                draggable: false,
-                editable: false,
-                visible: true,
-                fillOpacity: 0.05,
-                strokeColor: "#FBC02D",
-                fillColor: "#FBC02D",
-                zIndex: 2,
-              }}
-            />
-
-            <Circle
-              center={currentLocation}
-              radius={2500}
-              options={{
-                strokeOpacity: 0.5,
-                strokeWeight: 2,
-                clickable: false,
-                draggable: false,
-                editable: false,
-                visible: true,
-                fillOpacity: 0.05,
-                strokeColor: "#FF5252",
-                fillColor: "#FF5252",
-                zIndex: 1,
-              }}
-            />
-          </>
+          <Marker
+            position={currentLocation}
+            onClick={() => {
+              openModal(currentLocation);
+            }}
+          />
         )}
       </GoogleMap>
+
+      {/* Modal */}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Coordinates Modal"
+        className="custom-modal"
+        overlayClassName="custom-modal-overlay"
+      >
+        <h2>Coordinates</h2>
+        <div>
+          <p>Latitude: {modalContent.lat}</p>
+          <p>Longitude: {modalContent.lng}</p>
+        </div>
+        <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+      </Modal>
+
+      {/* Footer */}
+      <div className="footer bg-light p-3 text-center">
+        <div>
+          <button type="button" className="btn btn-primary" onClick={() => Logout()}>Logout</button>
+        </div>
+      </div>
     </div>
   );
 }
