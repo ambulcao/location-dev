@@ -6,7 +6,7 @@
             "first_name": "user",
             "last_name": "",
             "password": "123",
-            "departamento": "1"
+            "departamento": ["1", "23"]
         },
         {
             "id": "2",
@@ -14,7 +14,7 @@
             "first_name": "user1",
             "last_name": "",
             "password": "123",
-            "departamento": ["3", "20", "24", "26"]
+            "departamento": ["2", "10"]
         },
         {
             "id": "3",
@@ -30,7 +30,7 @@
             "first_name": "user2",
             "last_name": null,
             "password": "123",
-            "departamento": "2"
+            "departamento": "3"
         },
         {
             "id": "5",
@@ -46,7 +46,7 @@
             "first_name": "user4",
             "last_name": null,
             "password": "123",
-            "departamento": "5"
+            "departamento": ["5", "43"]
         }
     ]
 }
