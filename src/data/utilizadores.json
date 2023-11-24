@@ -1,0 +1,52 @@
+{
+    "utilizadores": [
+        {
+            "id": "1",
+            "username": "user",
+            "first_name": "user",
+            "last_name": "",
+            "password": "123",
+            "departamento": "1"
+        },
+        {
+            "id": "2",
+            "username": "user1",
+            "first_name": "user1",
+            "last_name": "",
+            "password": "123",
+            "departamento": ["3", "20", "24", "26"]
+        },
+        {
+            "id": "3",
+            "username": "Admin",
+            "first_name": "Admin",
+            "last_name": "Admin",
+            "password": "123",
+            "departamento": "0"
+        },
+        {
+            "id": "4",
+            "username": "user2",
+            "first_name": "user2",
+            "last_name": null,
+            "password": "123",
+            "departamento": "2"
+        },
+        {
+            "id": "5",
+            "username": "user3",
+            "first_name": "user3",
+            "last_name": null,
+            "password": "123",
+            "departamento": "4"
+        },
+        {
+            "id": "6",
+            "username": "user4",
+            "first_name": "user4",
+            "last_name": null,
+            "password": "123",
+            "departamento": "5"
+        }
+    ]
+}
