@@ -61,6 +61,16 @@ export default function LocationMap() {
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
+  const handleSearch = (searchValue) => {
+    // Adicione a lógica de pesquisa conforme necessário
+    console.log("Pesquisar por:", searchValue);
+  };
+
+  const handleDropdownChange = (selectedOption) => {
+    // Adicione a lógica de dropdown conforme necessário
+    console.log("Opção selecionada:", selectedOption);
+  };
+
   return (
     <div className="map-container">
       <GoogleMap
@@ -97,8 +107,20 @@ export default function LocationMap() {
         <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
       </Modal>
 
-      {/* Footer */}
-      <div className="footer bg-light p-3 text-center">
+       {/* Footer */}
+       <div className="footer bg-light p-3 text-center d-flex justify-content-between">
+        <div className="d-flex align-items-center">
+          <label htmlFor="searchInput" className="me-2">Search </label>
+          <input type="text" id="searchInput" onChange={(e) => handleSearch(e.target.value)} />
+        </div>
+        <div className="d-flex align-items-center">
+          <label htmlFor="dropdown" className="me-2">User</label>
+          <select id="dropdown" onChange={(e) => handleDropdownChange(e.target.value)}>
+            <option value="option1">Opção 1</option>
+            <option value="option2">Opção 2</option>
+            <option value="option3">Opção 3</option>
+          </select>
+        </div>
         <div>
           <button type="button" className="btn btn-primary" onClick={() => Logout()}>Logout</button>
         </div>
