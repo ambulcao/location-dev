@@ -61,10 +61,68 @@ export default function LocationMap() {
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
-  const handleSearch = (searchValue) => {
-    // Adicione a lógica de pesquisa conforme necessário
-    console.log("Pesquisar por:", searchValue);
+  const handleSearch = async (searchValue) => {
+    try {
+      const geocoder = new window.google.maps.Geocoder();
+      const results = await new Promise((resolve, reject) => {
+        geocoder.geocode({ address: searchValue }, (results, status) => {
+          if (status === window.google.maps.GeocoderStatus.OK) {
+            resolve(results);
+          } else {
+            reject(status);
+          }
+        });
+      });
+  
+      if (results.length > 0) {
+        const firstResult = results[0];
+  
+        // Verifique se o resultado tem uma localização válida
+        if (
+          firstResult.geometry &&
+          firstResult.geometry.location &&
+          typeof firstResult.geometry.location.lat === 'function' &&
+          typeof firstResult.geometry.location.lng === 'function'
+        ) {
+          const { lat, lng } = firstResult.geometry.location;
+  
+          // Verifique se as coordenadas são números válidos
+          if (!isNaN(lat()) && !isNaN(lng())) {
+            // Mova o mapa para a nova localização
+            if (mapRef.current) {
+              mapRef.current.panTo({ lat: lat(), lng: lng() });
+  
+              // Adicione um marcador na nova localização
+              const marker = new window.google.maps.Marker({
+                position: { lat: lat(), lng: lng() },
+                map: mapRef.current,
+                title: `Localização: ${searchValue}`,
+              });
+  
+              // Abra o modal com as coordenadas
+              openModal({ lat: lat(), lng: lng() });
+            }
+  
+            // Exemplo de como você pode lidar com o resultado da pesquisa
+            console.log("Resultado da pesquisa:", firstResult);
+          } else {
+            console.warn("Coordenadas inválidas encontradas:", firstResult);
+          }
+        } else {
+          console.warn("Resultado de pesquisa inválido:", firstResult);
+        }
+      } else {
+        console.warn("Nenhum resultado encontrado para a pesquisa:", searchValue);
+      }
+    } catch (error) {
+      if (error === "ZERO_RESULTS") {
+        console.warn("Nenhum resultado encontrado para a pesquisa:", searchValue);
+      } else {
+        console.error("Erro durante a pesquisa:", error);
+      }
+    }
   };
+  
 
   const handleDropdownChange = (selectedOption) => {
     // Adicione a lógica de dropdown conforme necessário
