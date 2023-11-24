@@ -1,6 +1,6 @@
 import './App.scss'
 import Home from './components/Home/Home'
-import Login from './components/Login/Login'
+import Login from './components/Login/LoginUtilizador'
 import Register from './components/Register/Register'
 import Dashboard from './components/Dashboard/Dashboard'
 

@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import "./Login.scss";
-import "../../App.scss";
-import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserShield } from 'react-icons/fa';
 import { BsFillShieldLockFill } from 'react-icons/bs';
@@ -9,47 +6,35 @@ import { AiOutlineSwapRight } from 'react-icons/ai';
 import video from "../../LoginAssets/video.webm";
 import videoWebm from "../../LoginAssets/video.mp4";
 import logo from "../../LoginAssets/logo.png";
+import utilizadoresData from "../../data/utilizadores.json"; // Importa os dados de utilizadores
 
 const Login = () => {
-  const [loginUserName, setLoginUserName] = useState('')
-  const [loginPassword, setLoginPassword] = useState('')
-  const [loginStatus, setLoginStatus] = useState('')
+  const [loginUserName, setLoginUserName] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+  const [loginStatus, setLoginStatus] = useState('');
   const navigate = useNavigate();
 
-  axios.defaults.withCredentials = true
   const handleLogin = (e) => {
     e.preventDefault();
-    window.localStorage.setItem("isLogedIn", true)
-    axios.post('http://localhost:3002/login', {
-      LoginUserName: loginUserName,
-      LoginPassword: loginPassword
-    },{
-      withCredentials: true
-    })
-    .then((response) => {
-      console.log(response.data);
-      if (response.data.length > 0) {
-        const user = response.data[0];
-    
-        // Exemplo: Se o usuário tiver um departamento, considere-o como "Admin"
-        const userRole = user.departamento ? "Admin" : "User";
-    
-        if (userRole === "Admin") {
-          setLoginStatus('Login successful');
-          navigate("/dashboard");
-        } else {
-          console.log("Redirecting to /home");
-          navigate("/home");
-        }
+
+    const user = utilizadoresData.utilizadores.find(
+      (u) => u.username === loginUserName && u.password === loginPassword
+    );
+
+    if (user) {
+      const userRole = user.departamento ? "Admin" : "User";
+
+      if (userRole === "Admin") {
+        setLoginStatus('Login successful');
+        navigate("/home");
       } else {
-        setLoginStatus('Credentials do not match');
+        setLoginStatus('Login successful');
+        navigate("/dashboard");
       }
-    })
-      .catch((error) => {
-        console.error('Error during login', error)
-        setLoginStatus('Error during login. Please try again.')
-      })
-  }
+    } else {
+      setLoginStatus('Credentials do not match');
+    }
+  };
 
   return (
     <div className="loginPage flex">
@@ -81,7 +66,7 @@ const Login = () => {
           </div>
 
           <form action="" className="form grid">
-            <span className="showMessage">Login Status will go here</span>
+            <span className="showMessage">{loginStatus}</span>
             <div className="inputDiv">
               <label htmlFor="username">Username</label>
               <div className="input flex">
@@ -117,21 +102,19 @@ const Login = () => {
               <AiOutlineSwapRight className='icon' />
             </button>
 
-            {/* Condição para exibir a mensagem apenas quando o login não autenticar */}
             {loginStatus === 'Credentials do not match' && (
               <span className="btn-message showBtnMessage flex">{loginStatus}</span>
             )}
 
-            <span>To test</span>
-            <span>User: user10</span>
+            <div style={{ fontSize: "12px", border: "2px solid #000", padding: "10px" }}>
+            <strong>To test - </strong>
+            <span>User: Admin / </span>
             <span>Password: 123</span>
-            {/*<a href="/home">Mapa</a>*/}
-            {/*<Link to="/home">Mapa</Link>*/}
+            </div>
 
             <span className="forgotPassword">
-              Forgot yout password? <a href="">Click Here</a>
+              Forgot your password? <a href="">Click Here</a>
             </span>
-
           </form>
         </div>
       </div>
