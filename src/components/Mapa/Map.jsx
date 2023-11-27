@@ -77,7 +77,6 @@ export default function LocationMap() {
       if (results.length > 0) {
         const firstResult = results[0];
   
-        // Verifique se o resultado tem uma localização válida
         if (
           firstResult.geometry &&
           firstResult.geometry.location &&
@@ -86,24 +85,23 @@ export default function LocationMap() {
         ) {
           const { lat, lng } = firstResult.geometry.location;
   
-          // Verifique se as coordenadas são números válidos
           if (!isNaN(lat()) && !isNaN(lng())) {
-            // Mova o mapa para a nova localização
-            if (mapRef.current) {
-              mapRef.current.panTo({ lat: lat(), lng: lng() });
-  
-              // Adicione um marcador na nova localização
-              const marker = new window.google.maps.Marker({
-                position: { lat: lat(), lng: lng() },
-                map: mapRef.current,
-                title: `Localização: ${searchValue}`,
+            // Verifique se mapRef.current e mapRef.current.markers estão definidos antes de usar forEach
+            if (mapRef.current && mapRef.current.markers) {
+              // Remova todos os marcadores existentes
+              mapRef.current.markers.forEach((marker) => {
+                marker.setMap(null);
               });
-  
-              // Abra o modal com as coordenadas
-              openModal({ lat: lat(), lng: lng() });
             }
   
-            // Exemplo de como você pode lidar com o resultado da pesquisa
+            new window.google.maps.Marker({
+              position: { lat: lat(), lng: lng() },
+              map: mapRef.current,
+              title: searchValue,
+            });
+  
+            mapRef.current?.panTo({ lat: lat(), lng: lng() });
+  
             console.log("Resultado da pesquisa:", firstResult);
           } else {
             console.warn("Coordenadas inválidas encontradas:", firstResult);
