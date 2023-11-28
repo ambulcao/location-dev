@@ -1,23 +1,29 @@
-import React, { useState, useMemo, useCallback, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
 import { GoogleMap, Marker } from "@react-google-maps/api";
 import { Loader } from "@googlemaps/js-api-loader";
-import { useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
-import '../../App.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import "../../App.scss";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 Modal.setAppElement("#root");
 
 export default function LocationMap() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ lat: 0, lng: 0 });
 
   const Logout = () => {
-    window.localStorage.removeItem("isLogedIn")
-    navigate('/')
-  }
+    window.localStorage.removeItem("isLogedIn");
+    navigate("/");
+  };
 
   const openModal = useCallback((position) => {
     setModalContent(position);
@@ -30,11 +36,14 @@ export default function LocationMap() {
 
   const mapRef = useRef();
   const center = useMemo(() => ({ lat: 41.332434, lng: -8.5273209 }), []);
-  const options = useMemo(() => ({
-    mapId: "13a84d305d69091b",
-    disableDefaultUI: true,
-    clickableIcons: false,
-  }), []);
+  const options = useMemo(
+    () => ({
+      mapId: "13a84d305d69091b",
+      disableDefaultUI: true,
+      clickableIcons: false,
+    }),
+    []
+  );
 
   useEffect(() => {
     const loader = new Loader({
@@ -73,18 +82,18 @@ export default function LocationMap() {
           }
         });
       });
-  
+
       if (results.length > 0) {
         const firstResult = results[0];
-  
+
         if (
           firstResult.geometry &&
           firstResult.geometry.location &&
-          typeof firstResult.geometry.location.lat === 'function' &&
-          typeof firstResult.geometry.location.lng === 'function'
+          typeof firstResult.geometry.location.lat === "function" &&
+          typeof firstResult.geometry.location.lng === "function"
         ) {
           const { lat, lng } = firstResult.geometry.location;
-  
+
           if (!isNaN(lat()) && !isNaN(lng())) {
             // Verifique se mapRef.current e mapRef.current.markers estão definidos antes de usar forEach
             if (mapRef.current && mapRef.current.markers) {
@@ -93,15 +102,15 @@ export default function LocationMap() {
                 marker.setMap(null);
               });
             }
-  
+
             new window.google.maps.Marker({
               position: { lat: lat(), lng: lng() },
               map: mapRef.current,
               title: searchValue,
             });
-  
+
             mapRef.current?.panTo({ lat: lat(), lng: lng() });
-  
+
             console.log("Resultado da pesquisa:", firstResult);
           } else {
             console.warn("Coordenadas inválidas encontradas:", firstResult);
@@ -110,17 +119,22 @@ export default function LocationMap() {
           console.warn("Resultado de pesquisa inválido:", firstResult);
         }
       } else {
-        console.warn("Nenhum resultado encontrado para a pesquisa:", searchValue);
+        console.warn(
+          "Nenhum resultado encontrado para a pesquisa:",
+          searchValue
+        );
       }
     } catch (error) {
       if (error === "ZERO_RESULTS") {
-        console.warn("Nenhum resultado encontrado para a pesquisa:", searchValue);
+        console.warn(
+          "Nenhum resultado encontrado para a pesquisa:",
+          searchValue
+        );
       } else {
         console.error("Erro durante a pesquisa:", error);
       }
     }
   };
-  
 
   const handleDropdownChange = (selectedOption) => {
     // Adicione a lógica de dropdown conforme necessário
@@ -160,25 +174,53 @@ export default function LocationMap() {
           <p>Latitude: {modalContent.lat}</p>
           <p>Longitude: {modalContent.lng}</p>
         </div>
-        <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
+        <button
+          type="button"
+          className="btn btn-secondary"
+          onClick={closeModal}
+        >
+          Close
+        </button>
       </Modal>
 
-       {/* Footer */}
-       <div className="footer bg-light p-3 text-center d-flex justify-content-between">
-        <div className="d-flex align-items-center">
-          <label htmlFor="searchInput" className="me-2">Search </label>
-          <input type="text" id="searchInput" onChange={(e) => handleSearch(e.target.value)} />
+      {/* Footer */}
+      <div className="footer bg-light p-3 d-md-flex flex-column flex-md-row justify-content-md-between">
+        <div className="d-flex align-items-center mb-3 mb-md-0 text-md-start">
+          <label htmlFor="searchInput" className="me-2">
+            Search
+          </label>
+          <input
+            type="text"
+            id="searchInput"
+            style={{ width: '400px' }}
+            className="form-control"
+            placeholder="Type your search here"
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </div>
-        <div className="d-flex align-items-center">
-          <label htmlFor="dropdown" className="me-2">User</label>
-          <select id="dropdown" onChange={(e) => handleDropdownChange(e.target.value)}>
-            <option value="option1">Opção 1</option>
-            <option value="option2">Opção 2</option>
-            <option value="option3">Opção 3</option>
+        <div className="d-flex align-items-center mb-3 mb-md-0 mx-auto">
+          <label htmlFor="dropdown" className="me-2">
+            User
+          </label>
+          <select
+            id="dropdown"
+            style={{ width: '400px' }}
+            className="form-select"
+            onChange={(e) => handleDropdownChange(e.target.value)}
+          >
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
           </select>
         </div>
-        <div>
-          <button type="button" className="btn btn-primary" onClick={() => Logout()}>Logout</button>
+        <div className="mb-3 mb-md-0 text-center mx-auto">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => Logout()}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
