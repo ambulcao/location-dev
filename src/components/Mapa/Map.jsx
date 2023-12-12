@@ -19,7 +19,6 @@ Modal.setAppElement("#root");
 const users = [
   { id: 'user1', data: data1 },
   { id: 'user2', data: data2 },
-  // Adicione mais usuários conforme necessário
 ];
 
 export default function LocationMap() {
@@ -55,39 +54,14 @@ export default function LocationMap() {
     []
   );
 
-  useEffect(() => {
-    const loader = new Loader({
-      apiKey: "AIzaSyCdQZtDgTu7ybq7GzoOgKhNw1PT7JKexLg",
-      version: "weekly",
-    });
-
-    loader.load().then(() => {
-      if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords;
-
-          if (!isNaN(latitude) && !isNaN(longitude)) {
-            setCurrentLocation({ lat: latitude, lng: longitude });
-          } else {
-            console.error("Invalid coordinates:", position.coords);
-          }
-        });
-      } else {
-        alert("Geolocation is not supported by your browser");
-      }
-    });
-  }, []);
-
-useEffect(() => {
-  // Carregar os dados do usuário selecionado
-  if (selectedUser) {
-    const user = users.find((user) => user.id === selectedUser);
+  const loadUserData = (userId) => {
+    const user = users.find((user) => user.id === userId);
     if (user) {
       console.log('Dados carregados:', user.data);
-      setUserData(user.data);
+      const dataArray = user.data?.dados1 || user.data?.dados2 || [];
+      setUserData(Array.isArray(dataArray) ? dataArray : []);
     }
-  }
-}, [selectedUser]);
+  };
 
   useEffect(() => {
     const loader = new Loader({
@@ -111,6 +85,12 @@ useEffect(() => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (selectedUser) {
+      loadUserData(selectedUser);
+    }
+  }, [selectedUser]);
 
   const onLoad = useCallback((map) => (mapRef.current = map), []);
 
@@ -139,22 +119,18 @@ useEffect(() => {
           const { lat, lng } = firstResult.geometry.location;
 
           if (!isNaN(lat()) && !isNaN(lng())) {
-            // Verifique se mapRef.current e mapRef.current.markers estão definidos antes de usar forEach
             if (mapRef.current && mapRef.current.markers) {
-              // Remova todos os marcadores existentes
               mapRef.current.markers.forEach((marker) => {
                 marker.setMap(null);
               });
             }
 
-            // Adicionar marcador ao mapa
             const marker = new window.google.maps.Marker({
               position: { lat: lat(), lng: lng() },
               map: mapRef.current,
               title: searchValue,
             });
 
-            // Adicionar marcador à lista de marcadores
             if (!mapRef.current.markers) {
               mapRef.current.markers = [];
             }
@@ -188,7 +164,6 @@ useEffect(() => {
   };
 
   const handleDropdownChange = (selectedOption) => {
-    // Adicione a lógica de dropdown conforme necessário
     console.log("Opção selecionada:", selectedOption);
     setSelectedUser(selectedOption);
   };
@@ -202,7 +177,6 @@ useEffect(() => {
         options={options}
         onLoad={onLoad}
       >
-        {/* Marker for current location */}
         {currentLocation && (
           <Marker
             position={currentLocation}
@@ -211,9 +185,22 @@ useEffect(() => {
             }}
           />
         )}
+
+        {userData.map((user) => (
+          <Marker
+            key={user.id_cliente}
+            position={{ lat: Number(user.latitude), lng: Number(user.longitude) }}
+            onClick={() => {
+              openModal({
+                lat: Number(user.latitude),
+                lng: Number(user.longitude),
+              });
+            }}
+            title={`${user.nome} (${user.id_cliente})`}
+          />
+        ))}
       </GoogleMap>
 
-      {/* Modal */}
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -235,7 +222,6 @@ useEffect(() => {
         </button>
       </Modal>
 
-      {/* Footer */}
       <div className="footer bg-light p-3 d-md-flex flex-column flex-md-row justify-content-md-between">
         <div className="d-flex align-items-center mb-3 mb-md-0 text-md-start">
           <label htmlFor="searchInput" className="me-2">
