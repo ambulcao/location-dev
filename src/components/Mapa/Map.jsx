@@ -11,14 +11,24 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import "../../App.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
+import data1 from '../../data/data1.json';
+import data2 from '../../data/data2.json';
 
 Modal.setAppElement("#root");
+
+const users = [
+  { id: 'user1', data: data1 },
+  { id: 'user2', data: data2 },
+  // Adicione mais usuários conforme necessário
+];
 
 export default function LocationMap() {
   const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState({ lat: 0, lng: 0 });
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [userData, setUserData] = useState([]);
 
   const Logout = () => {
     window.localStorage.removeItem("isLogedIn");
@@ -44,6 +54,40 @@ export default function LocationMap() {
     }),
     []
   );
+
+  useEffect(() => {
+    const loader = new Loader({
+      apiKey: "AIzaSyCdQZtDgTu7ybq7GzoOgKhNw1PT7JKexLg",
+      version: "weekly",
+    });
+
+    loader.load().then(() => {
+      if ("geolocation" in navigator) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+
+          if (!isNaN(latitude) && !isNaN(longitude)) {
+            setCurrentLocation({ lat: latitude, lng: longitude });
+          } else {
+            console.error("Invalid coordinates:", position.coords);
+          }
+        });
+      } else {
+        alert("Geolocation is not supported by your browser");
+      }
+    });
+  }, []);
+
+useEffect(() => {
+  // Carregar os dados do usuário selecionado
+  if (selectedUser) {
+    const user = users.find((user) => user.id === selectedUser);
+    if (user) {
+      console.log('Dados carregados:', user.data);
+      setUserData(user.data);
+    }
+  }
+}, [selectedUser]);
 
   useEffect(() => {
     const loader = new Loader({
@@ -103,11 +147,18 @@ export default function LocationMap() {
               });
             }
 
-            new window.google.maps.Marker({
+            // Adicionar marcador ao mapa
+            const marker = new window.google.maps.Marker({
               position: { lat: lat(), lng: lng() },
               map: mapRef.current,
               title: searchValue,
             });
+
+            // Adicionar marcador à lista de marcadores
+            if (!mapRef.current.markers) {
+              mapRef.current.markers = [];
+            }
+            mapRef.current.markers.push(marker);
 
             mapRef.current?.panTo({ lat: lat(), lng: lng() });
 
@@ -139,6 +190,7 @@ export default function LocationMap() {
   const handleDropdownChange = (selectedOption) => {
     // Adicione a lógica de dropdown conforme necessário
     console.log("Opção selecionada:", selectedOption);
+    setSelectedUser(selectedOption);
   };
 
   return (
@@ -208,9 +260,11 @@ export default function LocationMap() {
             className="form-select"
             onChange={(e) => handleDropdownChange(e.target.value)}
           >
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            {users.map((user) => (
+              <option key={user.id} value={user.id}>
+                {user.id}
+              </option>
+            ))}
           </select>
         </div>
         <div className="mb-3 mb-md-0 text-center mx-auto">
